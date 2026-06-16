@@ -13,19 +13,17 @@ pipeline {
             }
         }
         stage('Build Docker Image') {
-            steps {
-                script {
-                    // Build the Docker image
-                    sh 'docker build -t kuberneteshttpd:latest .'
-                }
+            steps {                
+                // Build the Docker image
+                sh 'docker build -t kuberneteshttpd:latest .'               
             }
         }
-        stage('Run Docker Container') {
+        stage('Deploying container to Kubernetes') {
             steps {
-                script {
-                    // Run the Docker container
-                    sh 'docker run -d -p 80:80 --name kuberneteshttpd_container kuberneteshttpd:latest'
-                }
+                // Deploying container to Kubernetes
+                kubernetesDeploy(
+                    configs: 'Deployment.yml,Service.yml'
+                )
             }
         }
     }
