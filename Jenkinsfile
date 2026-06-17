@@ -25,17 +25,5 @@ pipeline {
                 sh 'kubectl apply -f Service.yml'
             }
         }
-    }
-    post {
-        always {
-            echo 'The pipeline completed'
-        }
-        success {
-            echo "Httpd Up and running!!"
-        }
-        failure {
-            echo 'Build stage failed'
-            error('Stopping early…')
-        }
-    }
+    }    
 }
