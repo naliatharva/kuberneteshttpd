@@ -21,9 +21,8 @@ pipeline {
         stage('Deploying container to Kubernetes') {
             steps {
                 // Deploying container to Kubernetes
-                kubernetesDeploy(
-                    configs: 'Deployment.yml,Service.yml'
-                )
+                sh 'kubectl apply -f Deployment.yml'
+                sh 'kubectl apply -f Service.yml'
             }
         }
     }
