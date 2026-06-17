@@ -18,10 +18,20 @@ pipeline {
                 sh 'docker build -t kuberneteshttpd:latest .'               
             }
         }
+        stage('Debug Kubernetes') {
+            steps {
+                sh '''
+                whoami
+                kubectl config current-context || true
+                kubectl cluster-info || true
+                kubectl get nodes || true
+                '''
+            }
+        }
         stage('Deploying container to Kubernetes') {
             steps {
                 // Deploying container to Kubernetes
-                sh 'kubectl apply -f Deployment.yml --validate=false'
+                sh 'kubectl apply -f Deployment.yml'
                 sh 'kubectl apply -f Service.yml'
             }
         }
