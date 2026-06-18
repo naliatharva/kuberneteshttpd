@@ -28,6 +28,13 @@ pipeline {
                 '''
             }
         } */
+        stage('Debug') {
+            steps {
+                sh 'whoami'
+                sh 'id'
+                sh 'kubectl get nodes'
+            }
+        }
         stage('Deploying container to Kubernetes') {
             steps {
                 // Deploying container to Kubernetes
