@@ -40,8 +40,8 @@ pipeline {
                 // Deploying container to Kubernetes
                  withKubeConfig(credentialsId: 'Kubeconfig') {
                     sh '''
-                        kubectl apply -f deployment.yaml
-                        kubectl apply -f service.yaml
+                        kubectl apply -f Deployment.yml
+                        kubectl apply -f Service.yml
                     '''
                 }
             }
