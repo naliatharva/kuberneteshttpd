@@ -18,7 +18,7 @@ pipeline {
                 sh 'docker build -t kuberneteshttpd:latest .'               
             }
         }
-        stage('Debug Kubernetes') {
+        /* stage('Debug Kubernetes') {
             steps {
                 sh '''
                 whoami
@@ -27,12 +27,16 @@ pipeline {
                 kubectl get nodes || true
                 '''
             }
-        }
+        } */
         stage('Deploying container to Kubernetes') {
             steps {
                 // Deploying container to Kubernetes
-                sh 'kubectl apply -f Deployment.yml'
-                sh 'kubectl apply -f Service.yml'
+                 withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubernetes', 
+                                namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
+                    sh "kubectl delete --all pods"
+                    sh "kubectl apply -f deployment.yaml"
+                    sh "kubectl apply -f service.yaml"
+                }
             }
         }
     }    
