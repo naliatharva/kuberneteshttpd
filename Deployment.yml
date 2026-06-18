@@ -16,6 +16,6 @@ spec:
       - name: dockerhub-secret
       containers:
       - name: kuberneteshttpd
-        image: kuberneteshttpd:latest
+        image: nnithyan/kuberneteshttpd:latest
         ports:
         - containerPort: 80
