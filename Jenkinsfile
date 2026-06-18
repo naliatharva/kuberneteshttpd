@@ -31,11 +31,11 @@ pipeline {
         stage('Deploying container to Kubernetes') {
             steps {
                 // Deploying container to Kubernetes
-                 withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubernetes', 
-                                namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
-                    sh "kubectl delete --all pods"
-                    sh "kubectl apply -f deployment.yaml"
-                    sh "kubectl apply -f service.yaml"
+                 withKubeConfig(credentialsId: 'Kubeconfig') {
+                    sh '''
+                        kubectl apply -f deployment.yaml
+                        kubectl apply -f service.yaml
+                    '''
                 }
             }
         }
