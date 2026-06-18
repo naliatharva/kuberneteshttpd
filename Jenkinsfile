@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        IMAGE_NAME = "kuberneteshttpd"
+        IMAGE_TAG = "latest"
+    }
+
     stages {
         stage('Clone Repository') {
             steps {
@@ -15,7 +20,22 @@ pipeline {
         stage('Build Docker Image') {
             steps {                
                 // Build the Docker image
-                sh 'docker build -t kuberneteshttpd:latest .'               
+                sh 'docker build -t $IMAGE_NAME:$IMAGE_TAG .'               
+            }
+        }
+        stage ('Push To Docker Hub') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub',
+                    usernameVariable: 'dockerHubUser',
+                    passwordVariable: 'dockerHubPass'
+                    )]) {
+                    // Push image in to Docker Hub
+                    sh '''                                      
+                        docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}
+                        docker push ${env.dockerHubUser}/$IMAGE_NAME:$IMAGE_TAG
+                    '''
+                }
             }
         }
         /* stage('Debug Kubernetes') {
@@ -28,13 +48,13 @@ pipeline {
                 '''
             }
         } */
-        stage('Debug') {
+        /* stage('Debug') {
             steps {
                 sh 'whoami'
                 sh 'id'
                 sh 'kubectl get nodes'
             }
-        }
+        } */
         stage('Deploying container to Kubernetes') {
             steps {
                 // Deploying container to Kubernetes

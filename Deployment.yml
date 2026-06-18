@@ -12,9 +12,10 @@ spec:
       labels:
         app: kuberneteshttpd
     spec: 
+      imagePullSecrets:
+      - name: dockerhub
       containers:
       - name: kuberneteshttpd
         image: kuberneteshttpd:latest
-        imagePullPolicy: Never
         ports:
         - containerPort: 80
