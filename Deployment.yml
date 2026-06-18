@@ -15,6 +15,6 @@ spec:
       containers:
       - name: kuberneteshttpd
         image: kuberneteshttpd:latest
-        imagePullPolicy: NeverPull
+        imagePullPolicy: Never
         ports:
         - containerPort: 80
