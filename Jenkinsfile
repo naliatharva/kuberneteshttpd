@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "kuberneteshttpd"
+        IMAGE_NAME = "nnithyan/kuberneteshttpd"
         IMAGE_TAG = "latest"
     }
 
@@ -30,8 +30,10 @@ pipeline {
                     usernameVariable: 'DOCKER_USER',
                     passwordVariable: 'DOCKER_PASS'
                     )]) {
-                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
-                    sh 'docker push $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG'
+                    sh '''                        
+                        echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+                        docker push $IMAGE_NAME:$IMAGE_TAG
+                    '''
                 }
             }
         }
