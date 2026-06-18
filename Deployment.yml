@@ -11,9 +11,10 @@ spec:
     metadata:
       labels:
         app: kuberneteshttpd
-    spec:
+    spec: 
       containers:
       - name: kuberneteshttpd
         image: kuberneteshttpd:latest
+        imagePullPolicy: NeverPull
         ports:
         - containerPort: 80
