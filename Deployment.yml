@@ -13,7 +13,7 @@ spec:
         app: kuberneteshttpd
     spec: 
       imagePullSecrets:
-      - name: dockerhub-secret
+      - name: dockerhub
       containers:
       - name: kuberneteshttpd
         image: nnithyan/kuberneteshttpd:latest
